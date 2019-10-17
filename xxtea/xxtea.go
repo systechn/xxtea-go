@@ -117,21 +117,21 @@ func decrypt(v []uint32, k []uint32) []uint32 {
 // Encrypt the data with key.
 // data is the bytes to be encrypted.
 // key is the encrypt key. It is the same as the decrypt key.
-func Encrypt(data []byte, key []byte) []byte {
+func Encrypt(data []byte, key []byte, includeLength bool) []byte {
 	if data == nil || len(data) == 0 {
 		return data
 	}
-	return toBytes(encrypt(toUint32s(data, true), toUint32s(key, false)), false)
+	return toBytes(encrypt(toUint32s(data, includeLength), toUint32s(key, false)), false)
 }
 
 // Decrypt the data with key.
 // data is the bytes to be decrypted.
 // key is the decrypted key. It is the same as the encrypt key.
-func Decrypt(data []byte, key []byte) []byte {
+func Decrypt(data []byte, key []byte, includeLength bool) []byte {
 	if data == nil || len(data) == 0 {
 		return data
 	}
-	return toBytes(decrypt(toUint32s(data, false), toUint32s(key, false)), true)
+	return toBytes(decrypt(toUint32s(data, false), toUint32s(key, false)), includeLength)
 }
 
 // Encrypt the data with key.
