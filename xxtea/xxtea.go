@@ -137,35 +137,35 @@ func Decrypt(data []byte, key []byte, includeLength bool) []byte {
 // Encrypt the data with key.
 // data is the string to be encrypted.
 // key is the string of encrypt key.
-func EncryptString(str, key string) string {
+func EncryptString(str, key string, includeLength bool) string {
 	s := []byte(str)
 	k := []byte(key)
 	b64 := base64.StdEncoding
-	return b64.EncodeToString(Encrypt(s, k))
+	return b64.EncodeToString(Encrypt(s, k, includeLength))
 }
 
 // Decrypt the data with key.
 // data is the string to be decrypted.
 // key is the decrypted key. It is the same as the encrypt key.
-func DecryptString(str, key string) (string, error) {
+func DecryptString(str, key string, includeLength bool) (string, error) {
 	k := []byte(key)
 	b64 := base64.StdEncoding
 	decodeStr, err := b64.DecodeString(str)
 	if err != nil {
 		return "", err
 	}
-	result := Decrypt([]byte(decodeStr), k)
+	result := Decrypt([]byte(decodeStr), k, includeLength)
 	return string(result), nil
 }
 
 // Encrypt the string with key and convert the string to URL format
-func EncryptStdToURLString(str, key string) string {
-	return encryptBase64ToUrlFormat(EncryptString(str, key))
+func EncryptStdToURLString(str, key string, includeLength bool) string {
+	return encryptBase64ToUrlFormat(EncryptString(str, key, includeLength))
 }
 
 // Decrypt the URL string with key and convert the URL string to the origin string
-func DecryptURLToStdString(str, key string) (string, error) {
-	return DecryptString(decryptBase64ToStdFormat(str), key)
+func DecryptURLToStdString(str, key string, includeLength bool) (string, error) {
+	return DecryptString(decryptBase64ToStdFormat(str), key, includeLength)
 }
 
 // Replace std character to URL character in base64 string
